@@ -1,0 +1,80 @@
+<%- include ("./partials/header") -%>
+
+
+<div class="container my-4 pb-5">
+    <!-- Table -->
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="card bg-white shadow border-0">
+          <div class="card-header bg-white border-0 pb-4">
+            <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
+            <div class="text-center">
+              <a href="#" class="btn btn-neutral btn-icon mr-4">
+                <span class="btn-inner--icon"><img src="https://raw.githack.com/creativetimofficial/argon-dashboard/master/assets/img/icons/common/github.svg"></span>
+                <span class="btn-inner--text">Github</span>
+              </a>
+              <a href="#" class="btn btn-neutral">
+                <span class="btn-inner--icon"><img src="https://raw.githack.com/creativetimofficial/argon-dashboard/master/assets/img/icons/common/google.svg"></span>
+                <span class="btn-inner--text">Google</span>
+              </a>
+            </div>
+          </div>
+          <hr class="chr">
+          <div class="card-body py-4">
+            <div class="text-center text-muted mb-4">
+              <small>Or sign up with credentials</small>
+            </div>
+            <form role="form" action="/register" method="post">
+              <div class="form-group">
+                <div class="input-group input-group-alternative mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                  </div>
+                  <input class="form-control" name="name" placeholder="Name" type="text"
+                  value="<%= typeof name !='undefined'?name:''%>">
+                </div>
+                <div class="input-group input-group-alternative mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                  </div>
+                  <input class="form-control" name="username" placeholder="Username" type="text"
+                  value="<%= typeof name !='undefined'?username:''%>">
+                </div>
+                <div class="input-group input-group-alternative mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-house-user"></i></span>
+                  </div>
+                  <input class="form-control" name="email" placeholder="Email" type="email"
+                  value="<%= typeof email !='undefined'?email:''%>">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group input-group-alternative mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  </div>
+                  <input class="form-control" name="password" placeholder="Password" type="password"
+                  value="<%= typeof password !='undefined'?password:''%>">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-unlock"></i></span>
+                  </div>
+                  <input class="form-control" name="cpass" placeholder="Confirm password" type="password"
+                  value="<%= typeof cpass !='undefined'?cpass:''%>">
+                </div>
+              </div>
+              
+              <div class="text-center">
+                <button type="submit" class="btn btn-success mt-4">Create account</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%- include ("./partials/footer") -%>

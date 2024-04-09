@@ -1,0 +1,64 @@
+<%- include ("../partials/header") -%>
+
+<div class="m-5 p-5 rounded shadow" id="yellow">
+    <div >
+        <div class="row" >
+          <div class="col-sm">
+            <div class="container bg-white shadow-sm p-3 mb-3 bg-light rounded media">
+                    <img src="/img/avatar.png" width="50" class="rounded-circle align-self-start mr-3" alt="...">
+                    <div class="media-body">
+                      <h5 class="mt-0"><%=post.title%></h5>
+                      <small class="text-muted">Posted by <em class="text-capitalize"><%=post.author.username%></em></small>
+                      <div id="auto"><%-post.description%></div> 
+                    </div>
+            </div>
+            <div class="d-inline"> 
+              <div>
+                  <span class="badge badge-secondary">Posted <%=post.created.toLocaleDateString()%></span>
+                  <%if(currentUser)
+                      if(currentUser._id.equals(post.author.id)){%>
+                  <form class="dform" id="dchal" action="/challenges/<%=post._id%>?_method=DELETE" method="POST">
+                    <!-- <small onclick="document.getElementById('dchal').submit();" class="float-right mx-1 badge badge-danger">deleteplease</small> -->
+                    <button class="btn float-right mx-1 badge badge-danger" type="submit">delete</button>
+                  </form>
+                  <a href="/challenges/<%=post._id%>/edit" class="float-right mx-1 badge badge-warning">edit</a>
+                  <%}%>
+                  <a href="/challenges/<%=post._id%>/answers" class="float-right mx-1 badge badge-primary">show answers</a>
+              </div>   
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="container  shadow-sm p-3 mb-3 rounded media">
+              
+                <form action="/challenges/<%=post._id%>/answers/<%=answer._id%>" method="POST">
+                  <select name="comment[language]" id="lang" onChange="selectMode()">
+                    <%
+                    var options = ["Java","C", "C++", "C#", "Python"];
+                    for ( var i = 0; i < options.length; i++ )
+                    {
+                      var selected = (answer.language==options[i])? "selected":"";
+                      %><option value="<%=options[ i ] %>" <%=selected %>><%=options[ i ] %></option><%
+                    }
+                    %>
+                  </select>  
+                  <textarea id='source' type="text" name="comment[answer]"><%-answer.answer%></textarea>
+                    <input class="btn btn-success btn-sm btn-rounded my-2" type="submit">    
+                </form>
+            </div>
+          </div>
+          <div class="col-sm">
+
+            
+            <textarea class="form-control p-2 mt-5"  readonly id="output" >Output Screen </textarea>
+          
+          <h4>Input</h4>
+          <textarea class="form-control" id="input" placeholder="Inputs goes here..."></textarea>
+          <button class="btn btn-dark btn-sm border border-white mt-2" id="run" onclick="run()">Run (Ctrl + Enter)</button>
+
+          </br></br>
+          
+        </div>
+        </div>
+      </div>  
+</div>
+<%- include ("../partials/footer") -%>

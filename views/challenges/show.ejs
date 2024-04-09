@@ -1,0 +1,94 @@
+<%- include ("../partials/header") -%>
+
+<div class="container w-75 my-4 p-5 rounded shadow">
+    <div class="container bg-white shadow-lg p-3 mb-3 bg-light rounded media">
+      <img src="/img/avatar.png" width="50" class="rounded-circle align-self-start mr-3" alt="...">
+      <div class="media-body">
+        <h5 class="mt-0"><%-post.title%></h5>
+        <small class="text-muted">Posted by <em class="text-capitalize"><%=post.author.username%></em></small>
+        <p><%-post.description%></p>
+        <div class="d-inline">
+          <div>
+              <span class="badge badge-secondary">Posted <%=post.created.toLocaleDateString()%></span>
+              
+              <%if(currentUser)
+                if(currentUser._id.equals(post.author.id)){%>
+              <form class="dform" id="dchal" action="/challenges/<%=post._id%>?_method=DELETE" method="POST">
+                <button class="btn float-right mx-1 badge badge-danger" type="submit">delete</button>
+              </form> 
+              <a href="/challenges/<%=post._id%>/edit" class="float-right mx-1 badge badge-warning">edit</a> 
+              <%}%>
+              <a href="/challenges/<%=post._id%>/answers/new" class="float-right mx-1 badge badge-success">answer</a>
+              
+          </div>   
+        </div>
+      </div>
+    </div>
+    <!--Answers-->
+    <div class="media-body">
+        <div class="container p-3 m-3">    
+            <div class="container py-3  rounded shadow bg-light">
+              <div class="d-flex justify-content-between container p-2 my-3 rounded shadow bg-white">
+                <div><h4><small class="text-muted mr-3">Answers</small></h4></div>
+                <div><small class="badge badge-success mx-3 mt-2"><%=post.comments.length%></small></div>
+              </div>
+        <%if((post.comments===undefined || post.comments.length==0)){%>
+           
+            <div class="container rounded my-5 p-5 shadow my-5">
+                <div class="jumbotron pb-2 shadow bg-white">
+                              <h4 class="">No one dared to answer this challenge yet!</h4>
+                              <p class="lead">Be the first one to accept this challenge.</p>
+                              <hr class="my-4 bg-secondary chr">
+                              <p class="lead">
+                                   <a class="btn btn-success" href="/challenges/<%=post._id%>/answers/new" >Answer</a>
+                              </p>
+                </div>
+            </div>
+            <%}else {
+              var usernames=[];
+              post.comments.forEach(function(comment){
+                usernames.push(comment.author.username)
+              })
+              if(!((usernames.includes(currentUser.username)) || (currentUser._id.equals(post.author.id)))){%> 
+                <div class="container rounded my-5 p-5 shadow my-5">
+                  <div class="jumbotron pb-2 shadow bg-white">
+                                <h5 class="">You have not made any submissions for this challenge yet!</h5>
+                                <hr class="my-4 bg-secondary chr">
+                                <p class="lead">
+                                     <a class="btn btn-success" href="/challenges/<%=post._id%>/answers/new" >Answer</a>
+                                </p>
+                  </div>
+              </div>
+
+              <%} else {
+                 post.comments.slice().reverse().forEach(function(comment){%>
+                <div class="container navcontainer bg-white shadow-sm p-3 mb-3 bg-light media">
+                    <img src="/img/avatar.png" width="50" class="rounded-circle align-self-start mr-3" alt="...">
+                    <div class="media-body">
+                      <h5 class="mt-0"><%=comment.author.username%></h5>
+                      <div class="anscode">
+                        <pre class="my-2"><%=comment.answer%></pre>
+                      </div>
+                      
+                      <div class="d-inline">
+                        <div>
+                            <span class="badge badge-secondary"><%=comment.created.toLocaleDateString()%></span>
+                            
+                            <%if(currentUser)
+                                if(currentUser._id.equals(comment.author.id)){%>
+                            <form class="dform" id="dchal" action="/challenges/<%=post._id%>/answers/<%=comment._id%>?_method=DELETE" method="POST">
+                              <button class="btn float-right mx-1 badge badge-danger" type="submit">delete</button>
+                            </form> 
+                            <a href="/challenges/<%=post._id%>/answers/<%=comment._id%>/edit" class="float-right mx-1 badge badge-warning">edit</a>   
+                            <%}%>
+                          </div>   
+                      </div>    
+                    </div>
+                  </div><%})}}%>
+              </div>
+          </div>
+        </div>
+        
+  </div>
+
+  <%- include ("../partials/footer") -%>

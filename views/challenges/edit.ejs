@@ -1,0 +1,37 @@
+
+<%- include ("../partials/header") -%>
+<!-- <div id="my-div">
+           
+</div> -->
+<div class="container rounded my-5 p-5 shadow w-75 my-5">
+  <div class="container p-2 my-3 rounded shadow">
+    <h4><small class="text-muted mr-3">Edit</small></h4>
+  </div>
+    <div class="container bg-white shadow-sm p-3 mb-3 bg-light rounded">
+        <form action="/challenges/<%=post._id%>?_method=PUT" method="POST">
+            <div class="form-group">
+              <label for="formGroupExampleInput">Title</label>
+              <input type="text" class="form-control" name="post[title]" id="formGroupExampleInput" value="<%=post.title%>">
+            </div>
+            <div class="form-group">
+              <label class="mr-sm-2" for="language">Choose a language</label>
+              <select class="custom-select mr-sm-2 ct" name="post[language]">
+               
+                <option value="Java">Java</option>
+                <option value="Python">Python</option>
+                <option value="C">C</option>
+                <option value="Cpp">C++</option>
+                <script>
+                 $('.ct option[value=<%=post.language%>]').attr('selected',true);
+                </script>
+              </select>
+            
+            </div>
+            <textarea id="summernote" name="post[description]" placeholder="Describe your challenge"><%=post.description%></textarea>
+            <input class="btn btn-light btn-rounded my-2" type="submit">
+        </form>
+</div>
+
+</div>
+
+<%- include ("../partials/footer") -%>

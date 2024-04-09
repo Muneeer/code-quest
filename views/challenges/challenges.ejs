@@ -1,0 +1,65 @@
+<%- include ("../partials/header") -%>
+
+
+<% if (fpost === undefined || fpost.length == 0) { %>
+    <div class="container rounded my-5 p-5 shadow w-75 my-5">
+        <div class="jumbotron pb-2 shadow bg-white">
+                      <h1 class="display-4">There is no coding challenge yet!</h1>
+                      <p class="lead">Please come back again or add a new challenge to challenge your friends.</p>
+                      <hr class="chr">
+                      <p class="lead">
+                           <a class="btn btn-secondary" href="/challenges/new" >Add a new Challenge</a>
+                      </p>
+        </div>
+    </div>
+<%}else{%>
+  <div class="container py-2 my-4 rounded  shadow w-75">
+    <div class="jumbotron py-2 m-4 shadow bg-white">
+                  <h1 class="display-4">Challenge your friends!</h1>
+                  <p class="lead">Add a coding question to challenge your friend.</p>
+                  <hr class="chr">
+                  <p class="lead">
+                       <a class="btn btn-secondary" href="/challenges/new" >Add a new Challenge</a>
+                  </p>
+    </div>
+</div>
+  <div class="container w-75 my-4 p-5 rounded shadow">
+    <div class="container p-2 my-3 rounded shadow bg-white">
+      <h4><small class="text-muted mr-3">All challenges</small></h4>
+    </div>
+    <!-- slice copies the array (shallow copy, so not likely to be expensive), then we reverse it, then forEach: -->
+  <% fpost.slice().reverse().forEach(function (post){ %>  
+    <div class="container bg-white shadow-sm p-3 mb-3 bg-light rounded media">
+      <img src="../img/avatar.png" width="50" class="rounded-circle align-self-start mr-3" alt="...">
+      <div class="media-body">
+        <div>
+          <h5><%-post.title%></h5>
+        <small class="text-muted">Posted by <em class="text-capitalize"><%=post.author.username%></em></small>
+        </div>
+        
+        <p><%-post.description%></p>
+        <div class="d-inline">
+          <div >
+              <span class="badge badge-secondary">Posted <%=post.created.toLocaleDateString()%></span>
+              <a href="/challenges/<%=post._id%>/answers" class="float-right mx-1 badge badge-primary noti">
+                show answers
+                <!-- <span class="notibadge"><%=post.comments.length%></span> -->
+              </a>
+              <%if(currentUser)
+                if(currentUser._id.equals(post.author.id)){%>
+              <form class="dform" id="dchal" action="/challenges/<%=post._id%>?_method=DELETE" method="POST">
+                <button class="btn float-right mx-1 badge badge-danger" type="submit">delete</button>
+              </form>
+              <a href="/challenges/<%=post._id%>/edit" class="float-right mx-1 badge badge-warning">edit</a>
+              <%}%>
+              
+              <a href="/challenges/<%=post._id%>/answers/new" class="float-right mx-1 badge badge-success">answer</a>  
+          </div>   
+        </div>
+      </div>
+    </div>
+    <%})%>
+  </div>
+<%}%>
+
+<%- include ("../partials/footer") -%>
